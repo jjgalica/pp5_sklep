@@ -1,0 +1,59 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Movie list</h1>
+
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th></th>
+                <th>Nazwafilmu</th>
+                <th>Gatunekfilmu</th>
+                <th>Opisfilmu</th>
+                <th>Listaaktorow</th>
+                
+                <th>Cenafilmu</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td><img src="{{ asset(entity.okladka.path) }}" style="height:100px"></td>
+                <td>{{ entity.nazwaFilmu }}</td>
+                <td>{{ entity.gatunekFilmu }}</td>
+                <td>{{ entity.opisFilmu }}</td>
+                <td>{{ entity.listaAktorow }}</td>
+                
+                <td>{{ entity.cenaFilmu }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    {# SPRAWDZANEI PRAW, dla testow zrobione, że zwykłdy użytkonik może usunąc/edytować #}
+                {% if is_granted('ROLE_USER') %}
+                    <li>
+                        <a href="{{ path('buy_new', { 'id': entity.id }) }}">Zakup</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                {% endif %}
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+    {% endblock %}

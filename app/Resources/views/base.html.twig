@@ -2,11 +2,18 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}Witaj w sklepie!{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
+        <a href="{{ path('') }}">Lista filmow</a>|
+        <a href="{{ path('buy') }}">Lista zamowien</a>|
+        <a href="{{ path('_new') }}">Dodaj film</a>|
+        <a href="{{ path('fos_user_registration_register') }}">Zarejestruj się</a>|
+        <a href="{{ path('fos_user_security_login') }}">Zaloguj</a>
+        <hr/>
+
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
     </body>

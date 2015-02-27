@@ -1,0 +1,78 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Zakup
+ *
+ * @ORM\Table()
+ * @ORM\Entity
+ */
+class Zakup
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="czas", type="datetime")
+     */
+    private $czas;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     **/ 
+    private $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Movie")
+     * @ORM\JoinColumn(name="movie_id", referencedColumnName="id")
+     **/
+    private $movie;
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set czas
+     *
+     * @param \DateTime $czas
+     * @return Zakup
+     */
+    public function setCzas($czas)
+    {
+        $this->czas = $czas;
+
+        return $this;
+    }
+
+    /**
+     * Get czas
+     *
+     * @return \DateTime 
+     */
+    public function getCzas()
+    {
+        return $this->czas;
+    }
+
+
+}

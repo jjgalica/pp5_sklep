@@ -1,0 +1,17 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Dodaj film</h1>
+
+<form action="{{path('_create')}}" enctype="multipart/form-data" method="post">
+    {{ form_widget(form) }}
+</form>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('') }}">
+            Back to the list
+        </a>
+    </li>
+</ul>
+{% endblock %}
