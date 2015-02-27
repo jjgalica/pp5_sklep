@@ -6,12 +6,10 @@
 <form action="{{path('_create')}}" enctype="multipart/form-data" method="post">
     {{ form_widget(form) }}
 </form>
-
-        <ul class="record_actions">
-    <li>
+<hr/>
+<br/>
         <a href="{{ path('') }}">
             Back to the list
         </a>
-    </li>
-</ul>
+
 {% endblock %}

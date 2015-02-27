@@ -1,14 +1,18 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>Zakup list</h1>
 
-    <table class="records_list">
+<div class="container">
+    <h1>Lista zamówień</h1>
+    <table  class="table">
         <thead>
             <tr>
                 <th>Id</th>
                 <th>Czas</th>
-                <th>Actions</th>
+                <th>Uzytkownik</th>
+                <th>Dostawa</th>
+                <th>Film</th>
+                <th>Akcje</th>
             </tr>
         </thead>
         <tbody>
@@ -16,13 +20,13 @@
             <tr>
                 <td><a href="{{ path('buy_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
                 <td>{% if entity.czas %}{{ entity.czas|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ entity.user.username }}</td>
+                <td>{{ entity.user.address }}</td>
+                <td>{{ entity.movie.nazwaFilmu }}</td>
                 <td>
                 <ul>
                     <li>
-                        <a href="{{ path('buy_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('buy_edit', { 'id': entity.id }) }}">edit</a>
+                        <a href="{{ path('buy_show', { 'id': entity.id }) }}">Pokaz</a>
                     </li>
                 </ul>
                 </td>
@@ -30,12 +34,6 @@
         {% endfor %}
         </tbody>
     </table>
+</div>
 
-        <ul>
-        <li>
-            <a href="{{ path('buy_new') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
     {% endblock %}

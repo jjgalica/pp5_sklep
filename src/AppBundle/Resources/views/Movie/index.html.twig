@@ -1,59 +1,61 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>Movie list</h1>
+<div class="container">
+    <h1>Lista filmow</h1>
 
-    <table class="records_list">
+    <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th></th>
-                <th>Nazwafilmu</th>
-                <th>Gatunekfilmu</th>
-                <th>Opisfilmu</th>
-                <th>Listaaktorow</th>
+
+                <th>Okładka</th>
+                <th>Opis</th>
+                <th>Tytuł</th>
+                <th>Gatunek</th>
                 
-                <th>Cenafilmu</th>
-                <th>Actions</th>
+                <th>Lista aktorow</th>
+                
+                <th>Cena</th>
+                <th>Akcje</th>
             </tr>
         </thead>
         <tbody>
         {% for entity in entities %}
             <tr>
-                <td><a href="{{ path('_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
                 <td><img src="{{ asset(entity.okladka.path) }}" style="height:100px"></td>
+                <td>{{ entity.opisFilmu }}</td>
                 <td>{{ entity.nazwaFilmu }}</td>
                 <td>{{ entity.gatunekFilmu }}</td>
-                <td>{{ entity.opisFilmu }}</td>
+                
                 <td>{{ entity.listaAktorow }}</td>
                 
                 <td>{{ entity.cenaFilmu }}</td>
                 <td>
                 <ul>
                     <li>
-                        <a href="{{ path('_show', { 'id': entity.id }) }}">show</a>
+                        <a class="btn btn-xs btn-primary" href="{{ path('_show', { 'id': entity.id }) }}">show</a>
                     </li>
                     {# SPRAWDZANEI PRAW, dla testow zrobione, że zwykłdy użytkonik może usunąc/edytować #}
                 {% if is_granted('ROLE_USER') %}
                     <li>
-                        <a href="{{ path('buy_new', { 'id': entity.id }) }}">Zakup</a>
+                        <a class="btn btn-xs btn-success" href="{{ path('buy_new', { 'id': entity.id }) }}">Zakup</a>
                     </li>
                     <li>
-                        <a href="{{ path('_edit', { 'id': entity.id }) }}">edit</a>
+                        <a class="btn btn-xs btn-info" href="{{ path('_edit', { 'id': entity.id }) }}">Edytuj</a>
                     </li>
                 {% endif %}
                 </ul>
                 </td>
             </tr>
+            
         {% endfor %}
         </tbody>
     </table>
-
-        <ul>
-        <li>
-            <a href="{{ path('_new') }}">
-                Create a new entry
+                {% if is_granted('ROLE_USER') %}
+            <a class="btn btn-success" href="{{ path('_new') }}">
+                Dodaj nowy film
             </a>
-        </li>
-    </ul>
+        {% endif %}
+
+</div>
     {% endblock %}
