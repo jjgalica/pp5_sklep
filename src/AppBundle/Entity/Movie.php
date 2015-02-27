@@ -56,7 +56,7 @@ class Movie
      * @var array
      * @Assert\Image( maxSize="20M")
      * @FileStore\UploadableField(mapping="movie")
-     * @ORM\Column(name="okladka", type="array")
+     * @ORM\Column(name="okladka", type="array", nullable=false)
      */
     private $okladka;
 

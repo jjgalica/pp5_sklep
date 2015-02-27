@@ -1,7 +1,9 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-
+{% if id is defined %}
+    <h1>Zakupiłeś film!</h1>
+{% endif %}
 <div class="container">
     <h1>Lista zamówień</h1>
     <table  class="table">
@@ -17,7 +19,7 @@
         </thead>
         <tbody>
         {% for entity in entities %}
-            <tr>
+            <tr {{(loop.last and (id is defined))?'style="background:lime"':''}} >
                 <td><a href="{{ path('buy_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
                 <td>{% if entity.czas %}{{ entity.czas|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>{{ entity.user.username }}</td>

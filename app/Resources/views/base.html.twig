@@ -33,7 +33,9 @@
         {# sprawdzanei czy zalogowany #}
         {% if not is_granted('ROLE_USER') %}
         <a href="{{ path('fos_user_security_login') }}">Zaloguj</a> {% else %}
-        <a href="{{ path('fos_user_security_logout') }}">Wyloguj</a>
+        <a href="{{ path('fos_user_security_logout') }}">Wyloguj</a>|
+        <a href="{{ path('fos_user_profile_edit') }}">Edytuj profil</a>
+        
         {% endif %}
         <hr/>
 

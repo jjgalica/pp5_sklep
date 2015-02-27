@@ -127,7 +127,7 @@ class MovieController extends Controller
     /**
      * Displays a form to edit an existing Movie entity.
      *
-     * @Route("/{id}/edit", name="_edit")
+     * @Route("/{id}/movie/edit", name="_edit")
      * @Method("GET")
      * @Template()
      */

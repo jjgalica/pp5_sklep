@@ -84,7 +84,7 @@ iphp_file_store:
     mappings:
        movie:
            upload_dir:  %kernel.root_dir%/../web/img
-           upload_path: /img
+           upload_path: /~s166617/img
            namer:
                 translit: ~
                 propertyPrefix:    #or propertyPostfix 

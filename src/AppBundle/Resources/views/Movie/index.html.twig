@@ -22,7 +22,7 @@
         <tbody>
         {% for entity in entities %}
             <tr>
-                <td><img src="{{ asset(entity.okladka.path) }}" style="height:100px"></td>
+                <td><img src="{{ asset(entity.okladka.path|default('http://placehold.it/250x250')) }}" style="height:100px"></td>
                 <td>{{ entity.opisFilmu }}</td>
                 <td>{{ entity.nazwaFilmu }}</td>
                 <td>{{ entity.gatunekFilmu }}</td>
