@@ -21,25 +21,52 @@
         <link rel="stylesheet" href="{{asset('css/bootstrap-theme.min.css')}}">
         <link rel="stylesheet" href="{{asset('css/main.css')}}">
 
+        <script src="{{asset('js/vendor/jquery-1.11.2.min.js')}}"></script>
+        <script src="{{asset('js/vendor/bootstrap.min.js')}}"></script>
+        <script src="{{asset('js/vendor/bootbox.min.js')}}"></script>
         <script src="{{asset('js/vendor/modernizr-2.8.3-respond-1.4.2.min.js')}}"></script>
     </head>
     <body>
-        
-        <a href="{{ path('') }}">Lista filmow</a>|
-        <a href="{{ path('buy') }}">Lista zamowien</a>|
-        <a href="{{ path('_new') }}">Dodaj film</a>|
-        <a href="{{ path('fos_user_registration_register') }}">Zarejestruj się</a>|
-        
-        {# sprawdzanei czy zalogowany #}
-        {% if not is_granted('ROLE_USER') %}
-        <a href="{{ path('fos_user_security_login') }}">Zaloguj</a> {% else %}
-        <a href="{{ path('fos_user_security_logout') }}">Wyloguj</a>|
-        <a href="{{ path('fos_user_profile_edit') }}">Edytuj profil</a>
-        
-        {% endif %}
-        <hr/>
+        <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="{{ path('') }}">Strona główna</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="{{ path('buy') }}">Lista zamówień</a></li>
+            <li><a href="{{ path('_new') }}">Dodaj film</a></li>
+            
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
 
+                {{ app.user.username|default('Niezalogowany')}}
+                <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="{{ path('fos_user_registration_register') }}">Zarejestruj się</a></li>
+                <li><a href="{{ path('fos_user_security_login') }}">Zaloguj</a></li>
+                <li class="divider"></li>
+                <li><a href="{{ path('fos_user_security_logout') }}">Wyloguj</a></li>
+                <li><a href="{{ path('fos_user_profile_edit') }}">Edytuj profil</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+
+    <div class="container">
         {% block body %}{% endblock %}
+    </div>
         {% block javascripts %}{% endblock %}
     </body>
 </html>

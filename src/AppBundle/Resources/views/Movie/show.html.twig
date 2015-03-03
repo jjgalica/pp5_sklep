@@ -2,7 +2,16 @@
 
 {% block body -%}
 <div class="container">
-    <h1>Film</h1>
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th><h1>Film   </h1></th>
+                <td><a class="btn btn-success" href="{{ path('buy_new', { 'id': entity.id }) }}">
+                Wypożycz
+                </a></td>
+            </tr>    
+        </tbody>
+    </table>
 
     <table class="record_properties">
         <tbody>
@@ -11,48 +20,61 @@
                 <td>{{ entity.id }}</td>
             </tr>
             <tr>
-                <th>Nazwafilmu</th>
-                <td>{{ entity.nazwaFilmu }}</td>
+                <th><h3>Nazwa filmu  </h3></th>
+                <td><h3>{{ entity.nazwaFilmu }}</h3></td>
             </tr>
+         
             <tr>
-                <th>Gatunekfilmu</th>
+                <th>Okładka</th>
+                <td><img src="{{ asset(entity.okladka.path|default('http://placehold.it/250x250')) }}" style="height:250px"></td>
+            </tr>
+             <tr>
+                <th>Gatunek filmu  </th>
                 <td>{{ entity.gatunekFilmu }}</td>
             </tr>
             <tr>
-                <th>Opisfilmu</th>
+                <th>Opis filmu  </th>
                 <td>{{ entity.opisFilmu }}</td>
             </tr>
             <tr>
-                <th>Listaaktorow</th>
+                <th>Lista aktorów  </th>
                 <td>{{ entity.listaAktorow }}</td>
             </tr>
             <tr>
-                <th>Okladka</th>
-                <td><img src="{{ asset(entity.okladka.path|default('http://placehold.it/250x250')) }}" style="height:250px"></td>
-            </tr>
-            <tr>
-                <th>Cenafilmu</th>
-                <td>{{ entity.cenaFilmu }}</td>
+                <th>Cena filmu</th>
+                <td>{{ entity.cenaFilmu }},-</td>
             </tr>
         </tbody>
     </table>
-
-<ul class="record_actions">
-{# SPRAWDZANEI PRAW, dla testow zrobione, że zwykłdy użytkonik może usunąc/edytować #}
-{% if is_granted('ROLE_USER') %}
-    <li>
-        <a href="{{ path('_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-{% endif %} 
-    <li>
-        <a href="{{ path('') }}">
-            Back to the list
-        </a>
-    </li>
-    
+    <hr/>
+    <h1>Recenzje:</h1>
+    {% for reflection in reflections %}
+     <p> {{ reflection.text }} </p>
+     <hr/>
+ {% endfor %}
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>
+            <ul style="list-style-type: none;">
+            {# SPRAWDZANEI PRAW, dla testow zrobione, że zwykłdy użytkonik może usunąc/edytować #}
+            {% if is_granted('ROLE_USER') %}
+                <li>
+                    <a <a class="btn btn-warning" href="{{ path('_edit', { 'id': entity.id }) }}">
+                        Edit
+                    </a>
+                </li>
+               {#} <li>{{ form(delete_form) }}</li>#}
+            {% endif %} 
+                <li>
+                    <a <a class="btn btn-primary" href="{{ path('') }}">
+                        Back to the list
+                    </a>
+                </li>
+    </th>
 </ul>
+</tr>
+</tbody>
+    </table>
 </div>
 {% endblock %}

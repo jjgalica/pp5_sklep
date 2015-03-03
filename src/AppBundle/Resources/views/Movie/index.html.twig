@@ -2,46 +2,55 @@
 
 {% block body -%}
 <div class="container">
-    <h1>Lista filmow</h1>
+    <h1>Lista filmów</h1>
 
     <table class="table">
         <thead>
             <tr>
-
+        
+                <th>Tytuł</th>
                 <th>Okładka</th>
                 <th>Opis</th>
-                <th>Tytuł</th>
                 <th>Gatunek</th>
-                
                 <th>Lista aktorow</th>
-                
                 <th>Cena</th>
                 <th>Akcje</th>
+            
             </tr>
         </thead>
         <tbody>
         {% for entity in entities %}
             <tr>
-                <td><img src="{{ asset(entity.okladka.path|default('http://placehold.it/250x250')) }}" style="height:100px"></td>
+                <td><a href="{{ path('_show', { 'id': entity.id }) }}"><b>{{ entity.nazwaFilmu }}</b></a></td>
+
+                <td><a href="{{ path('_show', { 'id': entity.id }) }}"><img src="{{ asset(entity.okladka.path|default('http://placehold.it/250x250')) }}" style="height:100px"></a></td>
                 <td>{{ entity.opisFilmu }}</td>
-                <td>{{ entity.nazwaFilmu }}</td>
-                <td>{{ entity.gatunekFilmu }}</td>
+                
+                <td><i>{{ entity.gatunekFilmu }}</i></td>
                 
                 <td>{{ entity.listaAktorow }}</td>
                 
-                <td>{{ entity.cenaFilmu }}</td>
+                <td>{{ entity.cenaFilmu }},-</td>
                 <td>
-                <ul>
+                <ul style="list-style-type: none;">
+                    {#{list-style-type: none;}#}
+
                     <li>
-                        <a class="btn btn-xs btn-primary" href="{{ path('_show', { 'id': entity.id }) }}">show</a>
+                        <a class="btn btn-xs btn-primary" href="{{ path('_show', { 'id': entity.id }) }}"> show  </a>
                     </li>
                     {# SPRAWDZANEI PRAW, dla testow zrobione, że zwykłdy użytkonik może usunąc/edytować #}
                 {% if is_granted('ROLE_USER') %}
                     <li>
-                        <a class="btn btn-xs btn-success" href="{{ path('buy_new', { 'id': entity.id }) }}">Zakup</a>
+                        <a class="btn btn-xs btn-success" href="{{ path('buy_new', { 'id': entity.id }) }}"> Zakup </a>
                     </li>
                     <li>
-                        <a class="btn btn-xs btn-info" href="{{ path('_edit', { 'id': entity.id }) }}">Edytuj</a>
+                        <a class="btn btn-xs btn-success" href="#" onclick="addReflection({{entity.id}})">Dodaj recenzje</a>
+                    </li>
+                {% endif %}
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li>
+
+                        <a class="btn btn-xs btn-info" href="{{ path('_edit', { 'id': entity.id }) }}"> Edytuj </a>
                     </li>
                 {% endif %}
                 </ul>
@@ -58,4 +67,23 @@
         {% endif %}
 
 </div>
+
+<script type="text/javascript">
+function addReflection(id)
+{
+    bootbox.prompt({
+      title: "Co myslisz o filmie",
+      value: "słaby",
+      callback: function(result) {
+        if (result === null) {
+          //Example.show("Prompt dismissed");
+        } else {
+            $.post( "{{path('add_reflection')}}", { movie_id: id, text: result } );
+            alert('dodałeś');
+          //Example.show("Hi <b>"+result+"</b>");
+        }
+      }
+    });
+}
+</script>
     {% endblock %}

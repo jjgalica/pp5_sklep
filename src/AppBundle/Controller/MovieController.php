@@ -8,8 +8,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use AppBundle\Entity\Movie;
+use AppBundle\Entity\Reflection;
 use AppBundle\Form\MovieType;
-
+use Symfony\Component\HttpFoundation\Response;
 /**
  * Movie controller.
  *
@@ -35,6 +36,26 @@ class MovieController extends Controller
             'entities' => $entities,
         );
     }
+    /**
+     * Creates a new Movie entity.
+     *
+     * @Route("/", name="add_reflection")
+     * @Method("POST")
+     */
+    public function addReflectionAction(Request $request)
+    {
+        $entity = new Reflection();
+        $entity->setMovieId($_POST['movie_id']);
+        $entity->setText($_POST['text']);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($entity);
+        $em->flush();
+
+     
+        return new Response("ok");
+    }
+
     /**
      * Creates a new Movie entity.
      *
@@ -111,7 +132,8 @@ class MovieController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('AppBundle:Movie')->find($id);
-
+        
+        $reflections = $em->getRepository('AppBundle:Reflection')->findBy(array('movie_id'=>$id));
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Movie entity.');
         }
@@ -120,6 +142,7 @@ class MovieController extends Controller
 
         return array(
             'entity'      => $entity,
+            'reflections'      => $reflections,
             'delete_form' => $deleteForm->createView(),
         );
     }

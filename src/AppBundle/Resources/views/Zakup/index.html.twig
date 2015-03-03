@@ -10,8 +10,8 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Czas</th>
                 <th>Uzytkownik</th>
+                <th>Czas</th>
                 <th>Dostawa</th>
                 <th>Film</th>
                 <th>Akcje</th>
@@ -21,12 +21,13 @@
         {% for entity in entities %}
             <tr {{(loop.last and (id is defined))?'style="background:lime"':''}} >
                 <td><a href="{{ path('buy_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td>{% if entity.czas %}{{ entity.czas|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>{{ entity.user.username }}</td>
+                <td>{% if entity.czas %}{{ entity.czas|date('Y-m-d H:i:s') }}{% endif %}</td>
+                
                 <td>{{ entity.user.address }}</td>
                 <td>{{ entity.movie.nazwaFilmu }}</td>
                 <td>
-                <ul>
+                <ul style="list-style-type: none;">
                     <li>
                         <a href="{{ path('buy_show', { 'id': entity.id }) }}">Pokaz</a>
                     </li>
